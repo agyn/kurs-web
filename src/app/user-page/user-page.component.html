@@ -1,0 +1,14 @@
+<nz-layout>
+  <nz-sider nzWidth="200px" nzTheme="light">
+    <ul nz-menu nzMode="inline" class="sider-menu">
+      <li nz-menu-item routerLink="cities">Справочник городов</li>
+      <li nz-menu-item routerLink="exchangers">Обменики</li>
+      <li nz-menu-item routerLink="currencies">Курсы валют</li>
+    </ul>
+  </nz-sider>
+  <nz-layout class="inner-layout">
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

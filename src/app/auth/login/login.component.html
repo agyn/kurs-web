@@ -1,0 +1,46 @@
+<form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
+
+  <!-- userName -->
+  <nz-form-item>
+    <nz-form-control>
+      <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+      <nz-input-group [nzPrefix]="prefixUser">
+        <input type="text" nz-input formControlName="userName" [placeholder]="'userName'">
+      </nz-input-group>
+      <nz-form-label *ngIf="loginForm.get('userName').dirty && loginForm.get('userName').errors">
+        Введите username
+      </nz-form-label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- password -->
+  <nz-form-item>
+    <nz-form-control>
+      <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+      <nz-input-group [nzPrefix]="prefixLock">
+        <input type="password" nz-input formControlName="password" [placeholder]="'password'">
+      </nz-input-group>
+      <nz-form-label *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors">
+        Введите пароль
+      </nz-form-label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- controls -->
+  <nz-form-item class="controls">
+    <nz-form-control>
+
+      <!-- submit -->
+      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="waitForLogin">
+        Войти
+      </button>
+
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Incorrect login -->
+  <ng-container *ngIf="incorrectLogin">
+    <p class="login-error">не правильный логин</p>
+  </ng-container>
+
+</form>
