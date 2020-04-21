@@ -1,0 +1,82 @@
+<div class="fill-container bg-cwhite bs-1 pd-20">
+    <h2>Курсы валют</h2>
+    <br>
+    <button nz-button (click)="openModal()" nzType="primary">Добавить</button>
+    <br>
+    <br>
+  
+    <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+      <div nz-col nzSpan="8">
+        <nz-form-label [nzSpan]="10" nzFor="code">Наименование</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <input nz-input name="name" [(ngModel)]="name">
+        </nz-form-control>
+      </div>
+      <div nz-col nzSpan="4">
+        <button nz-button nzType="primary" (click)="search(true)">Пойск</button>
+      </div>
+    </div>
+  
+    <nz-table #currenciesTable nzBordered [nzShowSizeChanger]="true" [nzFrontPagination]="false" [nzData]="listOfData"
+      [nzLoading]="wait" [nzTotal]="total" [(nzPageIndex)]="page" [(nzPageSize)]="count" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Значение</th>
+          <th>Обменнник</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of currenciesTable.data">
+          <td>{{ data.name}}</td>
+          <td>{{ data.value}}</td>
+          <td>{{ data.exchanger}}</td>
+          <td>
+            <a (click)="edit(data)">Редактировать</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="delete(data.id)">Удалить</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="rows-count">Количество: {{ total + count}}</div>
+  </div>
+  
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Добавить город" nzWidth="850" (nzOnCancel)="cancelModal()">
+  
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="name" nzRequired>Наименование</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="name" />
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="name" nzRequired>Значение</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="value" />
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="name" nzRequired>Обменнник</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="exchangerId">
+            <nz-option *ngFor="let doc of exchangers" [nzLabel]="doc.name" [nzValue]="doc.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Отмена</button>
+        <button nz-button nzType="primary" (click)="save()" [nzType]="'primary'" [nzLoading]="isOkLoading">
+          Сохранить
+        </button>
+      </div>
+  
+    </form>
+  
+  </nz-modal>

@@ -2,17 +2,14 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { api } from 'src/environments/api';
-import { CitiesDto } from './cities-dto';
-import { CitiesList } from './cities-list';
-import { CitiesEditDto } from './cities-edit.dto';
-import { ExchangerEditDto } from './exchanger-edit.dto';
 import { ExchangerEditDto } from './exchanger-edit.dto';
 import { ExchangerList } from './exchanger-list';
 import { ExchangerDto } from './exchanger-dto';
+import { ShortRef } from '../short-ref';
 
 @Injectable()
 export class ExchangerSvc {
-  private commonUrl = `${api.main}/City`;
+  private commonUrl = `${api.main}/Exchanger`;
   private http: HttpClient;
 
   constructor(httpClient: HttpClient) {
@@ -20,11 +17,11 @@ export class ExchangerSvc {
   }
 
   public add(dto: ExchangerDto) {
-    return this.http.put(`${this.commonUrl}/Add`, dto);
+    return this.http.put(`${this.commonUrl}/AddExchanger`, dto);
   }
 
   public search(count: number, page: number, name: string): Observable<ExchangerList> {
-    return this.http.get<CitiesList>(`${this.commonUrl}/Search`, {
+    return this.http.get<ExchangerList>(`${this.commonUrl}/Search`, {
       params: {
         Count: `${count}`,
         Page: `${page}`,
@@ -44,6 +41,10 @@ export class ExchangerSvc {
         id: `${id}`
       }
     });
+  }
+
+  public getCities(): Observable<ShortRef[]> {
+    return this.http.get<ShortRef[]>(`${api.main}/City/GetCities`);
   }
 
 }

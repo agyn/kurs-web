@@ -1,5 +1,5 @@
 <div class="fill-container bg-cwhite bs-1 pd-20">
-  <h2>Справочник города</h2>
+  <h2>Обменники</h2>
   <br>
   <button nz-button (click)="openModal()" nzType="primary">Добавить</button>
   <br>
@@ -17,18 +17,24 @@
     </div>
   </div>
 
-  <nz-table #cities nzBordered [nzShowSizeChanger]="true" [nzFrontPagination]="false" [nzData]="listOfData"
+  <nz-table #exchangeTable nzBordered [nzShowSizeChanger]="true" [nzFrontPagination]="false" [nzData]="listOfData"
     [nzLoading]="wait" [nzTotal]="total" [(nzPageIndex)]="page" [(nzPageSize)]="count" (nzPageIndexChange)="search()"
     (nzPageSizeChange)="search(true)">
     <thead>
       <tr>
         <th>Название</th>
+        <th>Телефон</th>
+        <th>Адрес</th>
+        <th>Город</th>
         <th>Действия</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of cities.data">
+      <tr *ngFor="let data of exchangeTable.data">
         <td>{{ data.name}}</td>
+        <td>{{ data.phone}}</td>
+        <td>{{ data.address}}</td>
+        <td>{{ data.city}}</td>
         <td>
           <a (click)="edit(data)">Редактировать</a>
           <nz-divider nzType="vertical"></nz-divider>
@@ -67,8 +73,8 @@
     <nz-form-item>
       <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="name" nzRequired>Город</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-select formControlName="city">
-          <nz-option *ngFor="let doc of uchastokVlOt" [nzLabel]="doc.name" [nzValue]="doc.id"></nz-option>
+        <nz-select formControlName="cityId">
+          <nz-option *ngFor="let doc of cities" [nzLabel]="doc.name" [nzValue]="doc.id"></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>

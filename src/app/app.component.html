@@ -1,10 +1,14 @@
 <nz-layout>
   <nz-header>
+    
+    <!-- <p [appHighlight]="color">Highlight me!</p> -->
+
     <ul nz-menu nzTheme="dark" nzMode="horizontal">
       <li nz-menu-item routerLink="/public">Главная</li>
-      <li nz-menu-item routerLink="/register">Регистрация</li>
-      <li nz-menu-item routerLink="auth/login">Авторизация</li>
-      <li nz-menu-item (click)="logout()">Выйти</li>
+      <li *hasPermission="'Authorized'" nz-menu-item routerLink="/user-page/currencies">Личный кабинет</li>
+      <li *hasPermission="'notAuthorized'" nz-menu-item routerLink="/register">Регистрация</li>
+      <li *hasPermission="'notAuthorized'" nz-menu-item routerLink="auth/login">Авторизация</li>
+      <li *hasPermission="'Authorized'" nz-menu-item (click)="logout()">Выйти</li>
     </ul>
   </nz-header>
   <nz-content>

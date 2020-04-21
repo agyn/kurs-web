@@ -18,6 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { IdentityModule } from './shared/modules/identity/identity.module';
 import { AuthService } from './auth/auth.service';
+import { HasPermissionDirective } from './shared/modules/identity/directives/has-permission.directive';
 
 registerLocaleData(en);
 
@@ -26,7 +27,8 @@ registerLocaleData(en);
     AppComponent,
     KursPageComponent,
     RegisterComponent,
-    UserPageComponent
+    UserPageComponent,
+    HasPermissionDirective
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,9 @@ registerLocaleData(en);
     ScrollingModule,
     DragDropModule,
     IdentityModule.forRoot(),
+  ],
+  exports: [
+    HasPermissionDirective
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, AuthService],
   bootstrap: [AppComponent]

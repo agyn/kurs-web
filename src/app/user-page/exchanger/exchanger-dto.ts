@@ -3,4 +3,5 @@ export interface ExchangerDto {
   address: string;
   phone: string;
   cityId: number;
+  userId: number;
 }

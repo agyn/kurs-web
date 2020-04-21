@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NzNotificationService } from "ng-zorro-antd";
-import { ExchangerSvc } from './exchanger.svc';
-import { ExchangerEditDto } from './exchanger-edit.dto';
 import { ShortRef } from '../short-ref';
+import { CurrencyEditDto } from './currency-edit.dto';
+import { CurrencySvc } from './currency.svc';
 
 @Component({
-  selector: 'app-exchanger',
-  templateUrl: './exchanger.component.html',
-  styleUrls: ['./exchanger.component.css'],
-  providers: [ExchangerSvc]
+  selector: 'app-currency',
+  templateUrl: './currency.component.html',
+  styleUrls: ['./currency.component.css'],
+  providers: [CurrencySvc]
 })
-export class ExchangerComponent implements OnInit {
+export class CurrencyComponent implements OnInit {
 
 
   validateForm: FormGroup;
   public isVisible = false;
   public isOkLoading = false;
-  public dto: ExchangerEditDto;
+  public dto: CurrencyEditDto;
   public name: string = '';
   public editModal: boolean = false;
   public editId: number;
-  public cities: ShortRef[] = [];
+  public exchangers: ShortRef[] = [];
 
   wait = false;
   page = 0;
@@ -29,21 +29,20 @@ export class ExchangerComponent implements OnInit {
   total = 0;
   listOfData = [];
   constructor(private fb: FormBuilder,
-    private exchangerSvc: ExchangerSvc,
+    private currencySvc: CurrencySvc,
     private notification: NzNotificationService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      phone: [null, [Validators.required]],
-      cityId: [null, [Validators.required]],
+      value: [null, [Validators.required]],
+      exchangerId: [null, [Validators.required]],
     });
 
     this.search(true);
 
-    this.exchangerSvc.getCities().subscribe(res => {
-      this.cities = res;
+    this.currencySvc.getExchangers().subscribe(res => {
+      this.exchangers = res;
     })
   }
 
@@ -73,16 +72,15 @@ export class ExchangerComponent implements OnInit {
     this.isVisible = false;
   }
 
-  edit(row: ExchangerEditDto) {
+  edit(row: CurrencyEditDto) {
     this.editModal = true;
     this.isVisible = true;
     this.editId = row.id;
 
     let value = {
       name: row.name,
-      phone: row.phone,
-      address: row.address,
-      cityId: row.cityId
+      value: row.value,
+      exchangerId: row.exchangerId
     };
 
     for (const i in this.validateForm.controls) {
@@ -94,7 +92,7 @@ export class ExchangerComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.exchangerSvc.delete(id).subscribe(res => {
+    this.currencySvc.delete(id).subscribe(res => {
       this.notification.blank(
         'Результат',
         'Успешно',
@@ -110,12 +108,12 @@ export class ExchangerComponent implements OnInit {
       this.dto = this.validateForm.value;
       if (this.editModal) {
         this.dto.id = this.editId;
-        this.exchangerSvc.update(this.dto).subscribe(res => {
+        this.currencySvc.update(this.dto).subscribe(res => {
           this.isVisible = false;
           this.search();
         })
       } else {
-        this.exchangerSvc.add(this.dto).subscribe(res => {
+        this.currencySvc.add(this.dto).subscribe(res => {
           this.isVisible = false;
           this.search();
         })
@@ -128,7 +126,7 @@ export class ExchangerComponent implements OnInit {
       this.page = 0;
     }
     this.wait = true;
-    this.exchangerSvc.search(this.count, this.page, this.name).subscribe(res => {
+    this.currencySvc.search(this.count, this.page, this.name).subscribe(res => {
       this.listOfData = res.result || [];
       this.total = res.total - this.count;
     }).add(end =>

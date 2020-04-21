@@ -2,18 +2,20 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CitiesComponent } from './cities/cities.component';
 import { ExchangerComponent } from './exchanger/exchanger.component';
+import { CurrencyComponent } from './currency/currency.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'exchangers',
     component: ExchangerComponent,
   },
   {
-      path: 'cities',
-      component: CitiesComponent
+    path: 'cities',
+    component: CitiesComponent
   },
   {
-      path: 'currencies'
+    path: 'currencies',
+    component: CurrencyComponent
   }
 ];
 

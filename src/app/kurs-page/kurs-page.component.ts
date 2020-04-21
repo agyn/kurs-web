@@ -1,35 +1,40 @@
 import { Component, OnInit } from '@angular/core';
+import { KursPageSvc } from './kurs-page.svc';
 
 @Component({
   selector: 'app-kurs-page',
   templateUrl: './kurs-page.component.html',
-  styleUrls: ['./kurs-page.component.css']
+  styleUrls: ['./kurs-page.component.css'],
+  providers: [KursPageSvc]
 })
 export class KursPageComponent implements OnInit {
-  listOfData = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
-  
-  constructor() { }
+  public isVisible = false;
+  public isOkLoading = false;
+  public name: string = '';
+
+  wait = false;
+  page = 0;
+  count = 10;
+  total = 0;
+  listOfData = [];
+
+  constructor(private currencySvc: KursPageSvc, ) { }
 
   ngOnInit(): void {
+    this.search(true);
+  }
+
+  search(reload: boolean = false) {
+    if (reload) {
+      this.page = 0;
+    }
+    this.wait = true;
+    this.currencySvc.searchAll(this.count, this.page, this.name).subscribe(res => {
+      this.listOfData = res.result || [];
+      this.total = res.total - this.count;
+    }).add(end =>
+      this.wait = false
+    );
   }
 
 }

@@ -9,7 +9,8 @@ import { IdentityService } from './shared/modules/identity/identity.service';
 })
 export class AppComponent {
   title = 'kursweb';
-
+  color: string;
+  
   constructor(private _authService: AuthService,
     private _identityService: IdentityService) {
 

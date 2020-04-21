@@ -5,11 +5,13 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CitiesComponent } from './cities/cities.component';
 import { UserPageRoutingModule } from './user-page.routing.module';
 import { ExchangerComponent } from './exchanger/exchanger.component';
+import { CurrencyComponent } from './currency/currency.component';
 
 @NgModule({
     declarations: [
         CitiesComponent,
-        ExchangerComponent
+        ExchangerComponent,
+        CurrencyComponent
     ],
     imports: [
         CommonModule,

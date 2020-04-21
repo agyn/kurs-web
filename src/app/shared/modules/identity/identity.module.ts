@@ -4,11 +4,18 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IdentityInterceptor } from './identity.interceptor';
 import { IdentityService } from './identity.service';
 import { IdentityGuard } from './identity.guard';
+import { HasPermissionDirective } from './directives/has-permission.directive';
 
 @NgModule({
+  declarations: [
+    // HasPermissionDirective
+  ],
   imports: [
     CommonModule
   ],
+  exports: [
+    // HasPermissionDirective
+  ]
 })
 export class IdentityModule {
   static forRoot(): ModuleWithProviders {
